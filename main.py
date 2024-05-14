@@ -1,5 +1,5 @@
 import glob
-
+import os
 import cv2
 import time
 import Emailing
@@ -13,6 +13,14 @@ first_frame = None
 count = 0
 
 status_list = []
+
+
+def cleaner():
+    images = glob.glob("images/*.png")
+    for image in images:
+        os.remove(image)
+    print("cleaning images finished")
+
 
 while True:
     status = 0
@@ -43,6 +51,7 @@ while True:
             status = 1
             cv2.imwrite(f"images/{count}.png", frame)  # to get the images of object in images folder
             count = count + 1
+
             all_images = glob.glob("images/*.png")  # making the list of all images
             index = int(len(all_images) / 2)  # to get the most middlest image from the folder
             image_with_object = all_images[index]
@@ -51,7 +60,7 @@ while True:
     status_list = status_list[-2:]
 
     if status_list[0] == 1 and status_list[1] == 0:
-        Emailing.send_email(filepath=image_with_object)
+        Emailing.send_email(image_with_object)
 
     print(status_list)
 
@@ -60,5 +69,7 @@ while True:
     key = cv2.waitKey(1)
     if key == ord("q"):
         break
+
+cleaner()
 
 camera.release()

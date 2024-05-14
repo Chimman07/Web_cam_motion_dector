@@ -3,7 +3,7 @@ from email.message import EmailMessage
 import imghdr
 
 username = "sonichimman@gmail.com"
-password = "WzsAc4S85WFLxJ"
+password = "pctd tvvc tbzb vnay"
 
 
 def send_email(filepath):
@@ -20,4 +20,7 @@ def send_email(filepath):
     gmail.ehlo()
     gmail.starttls()
     gmail.login(username, password)
+
+    print("Message was sent")
+
 
